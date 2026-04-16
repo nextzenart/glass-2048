@@ -1,0 +1,1094 @@
+/* ============================================
+   GLASSMORPHISM 2048 - COMPLETE CSS
+   ============================================ */
+
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes blob-float-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.9);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translate(40px, 10px) scale(1.05);
+  }
+}
+
+@keyframes blob-float-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translate(-40px, 30px) scale(0.95);
+  }
+  50% {
+    transform: translate(30px, -20px) scale(1.1);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(-30px, -30px) scale(0.9);
+  }
+}
+
+@keyframes blob-float-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translate(25px, 40px) scale(1.05);
+  }
+  50% {
+    transform: translate(-35px, -25px) scale(0.95);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translate(35px, -35px) scale(1.1);
+  }
+}
+
+@keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1;
+  }
+  100% {
+    top: -50px;
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(-45deg, #0f0f1e, #1a0f2e, #0a1a3a, #1a0a2e);
+  background-size: 400% 400%;
+  color: #e0e0e0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  min-height: 100vh;
+  animation: gradient-shift 15s ease infinite;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 80px 0;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 20% 30%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 40% 80%, rgba(0, 188, 212, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: blob-float-1 20s ease-in-out infinite;
+}
+
+/* ============================================
+   CONTAINER & LAYOUT
+   ============================================ */
+
+.container {
+  width: 500px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.heading::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+h1.title {
+  font-size: 80px;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -2px;
+}
+
+.scores-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.score-container, .best-container {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 15px 25px;
+  font-size: 25px;
+  height: 25px;
+  line-height: 47px;
+  font-weight: 600;
+  border-radius: 12px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+              inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.score-container:hover, .best-container:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 40px rgba(167, 139, 250, 0.2),
+              inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.score-container::after, .best-container::after {
+  position: absolute;
+  width: 100%;
+  top: 10px;
+  left: 0;
+  text-transform: uppercase;
+  font-size: 13px;
+  line-height: 13px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.score-container::after {
+  content: 'Score';
+}
+
+.best-container::after {
+  content: 'Best';
+}
+
+.score-container .score-addition, .best-container .score-addition {
+  position: absolute;
+  right: 30px;
+  color: #60a5fa;
+  font-size: 25px;
+  line-height: 25px;
+  font-weight: 700;
+  z-index: 100;
+  animation: move-up 600ms ease-in both;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  line-height: 1.65;
+}
+
+a {
+  color: #60a5fa;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+
+a:hover {
+  color: #a78bfa;
+  border-bottom-color: #a78bfa;
+}
+
+strong.important {
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #a78bfa;
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.game-explanation {
+  margin-top: 50px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.attribution {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================
+   AD SPACES
+   ============================================ */
+
+#ad-space-top, #ad-space-bottom {
+  display: none;
+}
+
+/* ============================================
+   ABOVE GAME SECTION
+   ============================================ */
+
+.above-game {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.above-game::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.game-intro {
+  flex: 1;
+  line-height: 42px;
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.restart-button {
+  display: inline-block;
+  background: rgba(96, 165, 250, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(96, 165, 250, 0.4);
+  border-radius: 24px;
+  padding: 0 28px;
+  text-decoration: none;
+  color: #60a5fa;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(96, 165, 250, 0.1);
+}
+
+.restart-button:hover {
+  background: rgba(96, 165, 250, 0.3);
+  border-color: rgba(96, 165, 250, 0.6);
+  box-shadow: 0 8px 25px rgba(96, 165, 250, 0.25),
+              0 0 20px rgba(96, 165, 250, 0.15);
+  color: #fff;
+}
+
+.restart-button:active {
+  transform: scale(0.98);
+}
+
+/* ============================================
+   GAME CONTAINER
+   ============================================ */
+
+.game-container {
+  margin-top: 20px;
+  position: relative;
+  padding: 0;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -ms-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -ms-touch-action: none;
+  touch-action: none;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  width: 500px;
+  height: 500px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+              inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.game-container .game-message {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(15, 15, 30, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  text-align: center;
+  animation: fade-in 800ms ease 1200ms both;
+}
+
+.game-container .game-message p {
+  font-size: 60px;
+  font-weight: 700;
+  height: 60px;
+  line-height: 60px;
+  margin-top: 180px;
+  color: #fff;
+}
+
+.game-container .game-message .lower {
+  display: block;
+  margin-top: 40px;
+}
+
+.game-container .game-message a {
+  display: inline-block;
+  background: rgba(167, 139, 250, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(167, 139, 250, 0.4);
+  border-radius: 12px;
+  padding: 0 24px;
+  text-decoration: none;
+  color: #a78bfa;
+  height: 40px;
+  line-height: 40px;
+  margin: 0 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(167, 139, 250, 0.1);
+}
+
+.game-container .game-message a:hover {
+  background: rgba(167, 139, 250, 0.35);
+  border-color: rgba(167, 139, 250, 0.6);
+  box-shadow: 0 8px 25px rgba(167, 139, 250, 0.25),
+              0 0 20px rgba(167, 139, 250, 0.15);
+  color: #fff;
+}
+
+.game-container .game-message a.keep-playing-button {
+  display: none;
+}
+
+.game-container .game-message.game-won {
+  background: rgba(34, 197, 94, 0.1);
+  backdrop-filter: blur(12px);
+  color: #86efac;
+}
+
+.game-container .game-message.game-won a.keep-playing-button {
+  display: inline-block;
+}
+
+.game-container .game-message.game-over {
+  background: rgba(239, 68, 68, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+.game-container .game-message.game-won,
+.game-container .game-message.game-over {
+  display: block;
+}
+
+/* ============================================
+   GRID
+   ============================================ */
+
+.grid-container {
+  position: absolute;
+  z-index: 1;
+  padding: 15px;
+}
+
+.grid-row {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 15px;
+}
+
+.grid-row:last-child {
+  margin-bottom: 0;
+}
+
+.grid-row::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid-cell {
+  width: 107px;
+  height: 107px;
+  float: left;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+.grid-cell:last-child {
+  margin-right: 0;
+}
+
+/* ============================================
+   TILE POSITIONS (DESKTOP - 500px)
+   ============================================ */
+
+.tile-container {
+  position: absolute;
+  z-index: 2;
+  padding: 15px;
+}
+
+.tile, .tile .tile-inner {
+  width: 107px;
+  height: 107px;
+  line-height: 107px;
+}
+
+.tile {
+  position: absolute;
+  transition: 100ms ease-in-out;
+  transition-property: transform;
+}
+
+/* Position transforms - Column 1 */
+.tile.tile-position-1-1 {
+  transform: translate(0px, 0px);
+}
+
+.tile.tile-position-1-2 {
+  transform: translate(0px, 121px);
+}
+
+.tile.tile-position-1-3 {
+  transform: translate(0px, 242px);
+}
+
+.tile.tile-position-1-4 {
+  transform: translate(0px, 363px);
+}
+
+/* Position transforms - Column 2 */
+.tile.tile-position-2-1 {
+  transform: translate(121px, 0px);
+}
+
+.tile.tile-position-2-2 {
+  transform: translate(121px, 121px);
+}
+
+.tile.tile-position-2-3 {
+  transform: translate(121px, 242px);
+}
+
+.tile.tile-position-2-4 {
+  transform: translate(121px, 363px);
+}
+
+/* Position transforms - Column 3 */
+.tile.tile-position-3-1 {
+  transform: translate(242px, 0px);
+}
+
+.tile.tile-position-3-2 {
+  transform: translate(242px, 121px);
+}
+
+.tile.tile-position-3-3 {
+  transform: translate(242px, 242px);
+}
+
+.tile.tile-position-3-4 {
+  transform: translate(242px, 363px);
+}
+
+/* Position transforms - Column 4 */
+.tile.tile-position-4-1 {
+  transform: translate(363px, 0px);
+}
+
+.tile.tile-position-4-2 {
+  transform: translate(363px, 121px);
+}
+
+.tile.tile-position-4-3 {
+  transform: translate(363px, 242px);
+}
+
+.tile.tile-position-4-4 {
+  transform: translate(363px, 363px);
+}
+
+/* ============================================
+   TILE INNER (CONTENT)
+   ============================================ */
+
+.tile .tile-inner {
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 700;
+  z-index: 10;
+  font-size: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.06) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top-color: rgba(255, 255, 255, 0.3);
+  border-left-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   TILE COLORS & VALUES
+   ============================================ */
+
+/* --- Tile 2: 맑은 유리 --- */
+.tile.tile-2 .tile-inner {
+  background: linear-gradient(135deg, rgba(200, 210, 230, 0.22) 0%, rgba(180, 195, 220, 0.10) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(200, 210, 230, 0.35);
+  border-top-color: rgba(220, 230, 250, 0.45);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12),
+              inset 0 1px 0 rgba(255, 255, 255, 0.25),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  color: rgba(230, 235, 245, 0.95);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* --- Tile 4: 따뜻한 유리 (가독성 강화) --- */
+.tile.tile-4 .tile-inner {
+  background: linear-gradient(135deg, rgba(210, 190, 160, 0.28) 0%, rgba(190, 165, 130, 0.14) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(230, 210, 180, 0.4);
+  border-top-color: rgba(245, 230, 200, 0.5);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 240, 210, 0.22),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45), 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Tile 8: 오렌지 유리 --- */
+.tile.tile-8 .tile-inner {
+  background: linear-gradient(135deg, rgba(249, 140, 50, 0.22) 0%, rgba(230, 100, 30, 0.10) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(249, 140, 50, 0.4);
+  border-top-color: rgba(255, 170, 80, 0.5);
+  box-shadow: 0 8px 30px rgba(249, 115, 22, 0.15),
+              inset 0 1px 0 rgba(255, 200, 150, 0.2),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(180, 70, 0, 0.4);
+}
+
+/* --- Tile 16: 진한 오렌지 유리 --- */
+.tile.tile-16 .tile-inner {
+  background: linear-gradient(135deg, rgba(245, 100, 50, 0.22) 0%, rgba(220, 70, 30, 0.10) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(245, 100, 50, 0.45);
+  border-top-color: rgba(255, 140, 90, 0.5);
+  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.15),
+              inset 0 1px 0 rgba(255, 180, 150, 0.18),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(160, 40, 0, 0.4);
+}
+
+/* --- Tile 32: 레드 오렌지 유리 --- */
+.tile.tile-32 .tile-inner {
+  background: linear-gradient(135deg, rgba(230, 50, 50, 0.22) 0%, rgba(200, 30, 30, 0.10) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(230, 50, 50, 0.45);
+  border-top-color: rgba(255, 100, 100, 0.5);
+  box-shadow: 0 8px 30px rgba(220, 38, 38, 0.15),
+              inset 0 1px 0 rgba(255, 150, 150, 0.18),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(140, 20, 20, 0.4);
+}
+
+/* --- Tile 64: 레드 유리 --- */
+.tile.tile-64 .tile-inner {
+  background: linear-gradient(135deg, rgba(200, 25, 25, 0.25) 0%, rgba(170, 15, 15, 0.12) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(200, 25, 25, 0.5);
+  border-top-color: rgba(240, 80, 80, 0.5);
+  box-shadow: 0 8px 30px rgba(191, 18, 18, 0.18),
+              inset 0 1px 0 rgba(255, 130, 130, 0.15),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(120, 10, 10, 0.5);
+}
+
+/* --- Tile 128: 골드 유리 (글로우 시작) --- */
+.tile.tile-128 .tile-inner {
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.22) 0%, rgba(220, 170, 10, 0.10) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(250, 204, 21, 0.45);
+  border-top-color: rgba(255, 225, 80, 0.55);
+  box-shadow: 0 8px 35px rgba(250, 204, 21, 0.2),
+              0 0 15px rgba(250, 204, 21, 0.1),
+              inset 0 1px 0 rgba(255, 240, 150, 0.2);
+  font-size: 45px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Tile 256: 밝은 골드 유리 --- */
+.tile.tile-256 .tile-inner {
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.25) 0%, rgba(220, 170, 10, 0.12) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(250, 204, 21, 0.5);
+  border-top-color: rgba(255, 225, 80, 0.6);
+  box-shadow: 0 8px 38px rgba(250, 204, 21, 0.25),
+              0 0 20px rgba(250, 204, 21, 0.12),
+              inset 0 1px 0 rgba(255, 240, 150, 0.2);
+  font-size: 45px;
+  color: #fff;
+  text-shadow: 0 0 12px rgba(250, 204, 21, 0.35), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Tile 512: 강한 골드 유리 --- */
+.tile.tile-512 .tile-inner {
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.28) 0%, rgba(220, 170, 10, 0.14) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(250, 204, 21, 0.55);
+  border-top-color: rgba(255, 225, 80, 0.65);
+  box-shadow: 0 8px 40px rgba(250, 204, 21, 0.3),
+              0 0 25px rgba(250, 204, 21, 0.15),
+              inset 0 1px 0 rgba(255, 240, 150, 0.2);
+  font-size: 45px;
+  color: #fff;
+  text-shadow: 0 0 14px rgba(250, 204, 21, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Tile 1024: 빛나는 골드 유리 --- */
+.tile.tile-1024 .tile-inner {
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.3) 0%, rgba(220, 170, 10, 0.16) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(250, 204, 21, 0.6);
+  border-top-color: rgba(255, 225, 80, 0.7);
+  box-shadow: 0 8px 42px rgba(250, 204, 21, 0.35),
+              0 0 30px rgba(250, 204, 21, 0.18),
+              inset 0 1px 0 rgba(255, 240, 150, 0.22);
+  font-size: 35px;
+  color: #fff;
+  text-shadow: 0 0 16px rgba(250, 204, 21, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Tile 2048: 최강 골드 유리 --- */
+.tile.tile-2048 .tile-inner {
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.35) 0%, rgba(220, 170, 10, 0.18) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(250, 204, 21, 0.65);
+  border-top-color: rgba(255, 225, 80, 0.75);
+  box-shadow: 0 8px 45px rgba(250, 204, 21, 0.4),
+              0 0 35px rgba(250, 204, 21, 0.2),
+              inset 0 1px 0 rgba(255, 240, 150, 0.25);
+  font-size: 35px;
+  color: #fff;
+  text-shadow: 0 0 18px rgba(250, 204, 21, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Tile Super: 다크 골드 보더 유리 --- */
+.tile.tile-super .tile-inner {
+  background: linear-gradient(135deg, rgba(15, 15, 30, 0.5) 0%, rgba(30, 20, 50, 0.35) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 2px solid rgba(250, 204, 21, 0.55);
+  border-top-color: rgba(255, 225, 80, 0.65);
+  box-shadow: 0 8px 40px rgba(250, 204, 21, 0.25),
+              0 0 30px rgba(250, 204, 21, 0.12),
+              inset 0 1px 0 rgba(255, 240, 150, 0.1);
+  font-size: 30px;
+  color: #facc15;
+  text-shadow: 0 0 18px rgba(250, 204, 21, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================
+   TILE ANIMATIONS
+   ============================================ */
+
+.tile-new .tile-inner {
+  animation: appear 200ms ease 100ms backwards;
+}
+
+.tile-merged .tile-inner {
+  z-index: 20;
+  animation: pop 250ms cubic-bezier(0.34, 1.56, 0.64, 1) 80ms backwards;
+  box-shadow: 0 0 25px rgba(167, 139, 250, 0.35),
+              0 8px 32px rgba(0, 0, 0, 0.15),
+              inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   MOBILE RESPONSIVE (max-width: 520px)
+   ============================================ */
+
+@media screen and (max-width: 520px) {
+  html, body {
+    font-size: 15px;
+  }
+
+  body {
+    margin: 20px 0;
+    padding: 0 20px;
+  }
+
+  h1.title {
+    font-size: 32px;
+    margin-top: 15px;
+  }
+
+  .container {
+    width: 280px;
+    margin: 0 auto;
+  }
+
+  .score-container, .best-container {
+    margin-top: 0;
+    padding: 12px 10px;
+    min-width: 40px;
+    font-size: 14px;
+    height: 14px;
+    line-height: 36px;
+  }
+
+  .heading {
+    margin-bottom: 10px;
+  }
+
+  .above-game {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .game-intro {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    line-height: 1.65;
+    font-size: 14px;
+  }
+
+  .restart-button {
+    width: 100%;
+    padding: 0;
+    display: block;
+    box-sizing: border-box;
+  }
+
+  /* Game Container Mobile */
+  .game-container {
+    margin-top: 15px;
+    position: relative;
+    padding: 0;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -ms-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -ms-touch-action: none;
+    touch-action: none;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    width: 280px;
+    height: 280px;
+    box-sizing: border-box;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .game-container .game-message {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(15, 15, 30, 0.6);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    text-align: center;
+    animation: fade-in 800ms ease 1200ms both;
+  }
+
+  .game-container .game-message p {
+    font-size: 30px;
+    font-weight: 700;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 90px;
+    color: #fff;
+  }
+
+  .game-container .game-message .lower {
+    display: block;
+    margin-top: 30px;
+  }
+
+  .game-container .game-message a {
+    display: inline-block;
+    background: rgba(167, 139, 250, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(167, 139, 250, 0.4);
+    border-radius: 10px;
+    padding: 0 16px;
+    text-decoration: none;
+    color: #a78bfa;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 4px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(167, 139, 250, 0.1);
+  }
+
+  .game-container .game-message a.keep-playing-button {
+    display: none;
+  }
+
+  .game-container .game-message.game-won a.keep-playing-button {
+    display: inline-block;
+  }
+
+  /* Grid Mobile */
+  .grid-container {
+    position: absolute;
+    z-index: 1;
+    padding: 10px;
+  }
+
+  .grid-row {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .grid-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .grid-cell {
+    width: 58px;
+    height: 58px;
+    float: left;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  }
+
+  /* Tiles Mobile */
+  .tile, .tile .tile-inner {
+    width: 58px;
+    height: 58px;
+    line-height: 58px;
+  }
+
+  /* Mobile Position transforms - Column 1 */
+  .tile.tile-position-1-1 {
+    transform: translate(0px, 0px);
+  }
+
+  .tile.tile-position-1-2 {
+    transform: translate(0px, 67px);
+  }
+
+  .tile.tile-position-1-3 {
+    transform: translate(0px, 135px);
+  }
+
+  .tile.tile-position-1-4 {
+    transform: translate(0px, 202px);
+  }
+
+  /* Mobile Position transforms - Column 2 */
+  .tile.tile-position-2-1 {
+    transform: translate(67px, 0px);
+  }
+
+  .tile.tile-position-2-2 {
+    transform: translate(67px, 67px);
+  }
+
+  .tile.tile-position-2-3 {
+    transform: translate(67px, 135px);
+  }
+
+  .tile.tile-position-2-4 {
+    transform: translate(67px, 202px);
+  }
+
+  /* Mobile Position transforms - Column 3 */
+  .tile.tile-position-3-1 {
+    transform: translate(135px, 0px);
+  }
+
+  .tile.tile-position-3-2 {
+    transform: translate(135px, 67px);
+  }
+
+  .tile.tile-position-3-3 {
+    transform: translate(135px, 135px);
+  }
+
+  .tile.tile-position-3-4 {
+    transform: translate(135px, 202px);
+  }
+
+  /* Mobile Position transforms - Column 4 */
+  .tile.tile-position-4-1 {
+    transform: translate(202px, 0px);
+  }
+
+  .tile.tile-position-4-2 {
+    transform: translate(202px, 67px);
+  }
+
+  .tile.tile-position-4-3 {
+    transform: translate(202px, 135px);
+  }
+
+  .tile.tile-position-4-4 {
+    transform: translate(202px, 202px);
+  }
+
+  .tile .tile-inner {
+    font-size: 35px;
+  }
+
+  .tile.tile-128 .tile-inner,
+  .tile.tile-256 .tile-inner,
+  .tile.tile-512 .tile-inner {
+    font-size: 20px;
+  }
+
+  .tile.tile-1024 .tile-inner,
+  .tile.tile-2048 .tile-inner {
+    font-size: 18px;
+  }
+
+  .tile.tile-super .tile-inner {
+    font-size: 10px;
+  }
+}
