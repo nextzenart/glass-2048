@@ -1,15 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BB27RL8HVB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BB27RL8HVB');
+  </script>
   <meta charset="utf-8">
-  <title>Glass 2048 - Glassmorphism Puzzle Game</title>
+  <title>Glass 2048 — 글래스 2048</title>
+  <meta name="description" content="프리미엄 글래스모피즘 디자인의 2048 퍼즐 게임. Glass Games에서 플레이하세요.">
+  <meta name="theme-color" content="#0f0f1e">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Glass 2048 — 글래스 2048">
+  <meta property="og:description" content="같은 게임, 다른 경험. 프리미엄 글래스모피즘 2048.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://glassgames.app/2048">
+  <meta property="og:image" content="https://glassgames.app/2048/og-2048.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://glassgames.app/2048">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="style/main.css" rel="stylesheet" type="text/css">
-  <link rel="shortcut icon" href="favicon.ico">
-  <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
   <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x920.png"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -18,11 +39,33 @@
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+
+  <style>
+    .back-bar {
+      padding-top: 12px;
+      margin-bottom: 4px;
+    }
+    .back-bar .back-link {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: none;
+      transition: color 0.2s;
+    }
+    .back-bar .back-link:hover {
+      color: #a78bfa;
+      border-bottom: none;
+    }
+  </style>
 </head>
 <body>
   <div id="ad-space-top"></div>
 
   <div class="container">
+    <div class="back-bar">
+      <a class="back-link" href="https://glassgames.app">&larr; Glass Games</a>
+    </div>
     <div class="heading">
       <h1 class="title">Glass 2048</h1>
       <div class="scores-container">

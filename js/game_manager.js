@@ -21,14 +21,16 @@ GameManager.prototype.restart = function () {
 };
 
 // Keep playing after winning (allows going over 2048)
+// NOTE: event name stays "keepPlaying" to match the input manager contract,
+// but the instance flag is `keepGoing` so it doesn't shadow the prototype method.
 GameManager.prototype.keepPlaying = function () {
-  this.keepPlaying = true;
+  this.keepGoing = true;
   this.actuator.continueGame(); // Clear the game won/lost message
 };
 
 // Return true if the game is lost, or has won and the user hasn't kept playing
 GameManager.prototype.isGameTerminated = function () {
-  return this.over || (this.won && !this.keepPlaying);
+  return this.over || (this.won && !this.keepGoing);
 };
 
 // Set up the game
@@ -37,18 +39,22 @@ GameManager.prototype.setup = function () {
 
   // Reload the game from a previous game if present
   if (previousState) {
-    this.grid        = new Grid(previousState.grid.size,
-                                previousState.grid.cells); // Reload grid
-    this.score       = previousState.score;
-    this.over        = previousState.over;
-    this.won         = previousState.won;
-    this.keepPlaying = previousState.keepPlaying;
+    this.grid      = new Grid(previousState.grid.size,
+                              previousState.grid.cells); // Reload grid
+    this.score     = previousState.score;
+    this.over      = previousState.over;
+    this.won       = previousState.won;
+    // Accept both the new `keepGoing` key and the legacy `keepPlaying` key
+    // so previously-saved game state migrates cleanly.
+    this.keepGoing = previousState.keepGoing !== undefined
+                      ? previousState.keepGoing
+                      : !!previousState.keepPlaying;
   } else {
-    this.grid        = new Grid(this.size);
-    this.score       = 0;
-    this.over        = false;
-    this.won         = false;
-    this.keepPlaying = false;
+    this.grid      = new Grid(this.size);
+    this.score     = 0;
+    this.over      = false;
+    this.won       = false;
+    this.keepGoing = false;
 
     // Add the initial tiles
     this.addStartTiles();
@@ -101,11 +107,11 @@ GameManager.prototype.actuate = function () {
 // Represent the current game as an object
 GameManager.prototype.serialize = function () {
   return {
-    grid:        this.grid.serialize(),
-    score:       this.score,
-    over:        this.over,
-    won:         this.won,
-    keepPlaying: this.keepPlaying
+    grid:      this.grid.serialize(),
+    score:     this.score,
+    over:      this.over,
+    won:       this.won,
+    keepGoing: this.keepGoing
   };
 };
 
